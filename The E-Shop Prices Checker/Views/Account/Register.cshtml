@@ -1,0 +1,190 @@
+﻿@model The_E_Shop_Prices_Checker.Models.ViewModels.RegisterViewModel
+@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2b1b18;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            background-color: #2b1b18;
+            border-radius: 10px;
+            padding: 10px 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto -50px;
+        }
+
+        .text-center {
+            text-align: center;
+            color: #ff880e;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                color: #ff880e;
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .form-group input {
+                width: 96%;
+                padding: 10px;
+                background-color: #f87f04;
+                border: none;
+                border-radius: 5px;
+                color: white;
+                font-size: 14px;
+            }
+
+                .form-group input:focus {
+                    outline: none;
+                    box-shadow: 0px 0px 5px #ff880e;
+                }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn {
+            width: 20%;
+            padding: 10px;
+            background-color: #ff880e;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn:hover {
+                background-color: #f87f04;
+            }
+
+        footer {
+            background-color: #4d2900;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            margin-top:50px;
+        }
+
+        select {
+            width: 96%;
+            padding: 10px;
+            background-color: #f87f04;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+        }
+
+    </style>
+
+    <script>
+        function toggleCompanyFields(isCompany) {
+            // Toggle the visibility of company-related fields
+            const additionalFields = document.getElementById('company-fields');
+            additionalFields.style.display = isCompany ? 'block' : 'none';
+
+            // Update the model value of IsAdmin based on selection
+            document.getElementById('IsAdmin').value = isCompany ? 'true' : 'false';
+        }
+    </script>
+</head>
+<body>
+    <div class="container" style="min-width: 35%;">
+        <h2 class="text-center">Register</h2>
+        <form asp-action="Register" method="post">
+            <div class="form-group">
+                <label asp-for="FullName">Full Name</label>
+                <input asp-for="FullName" style="margin-bottom:10px;" class="form-control" />
+                <span asp-validation-for="FullName" style="color: red;"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" style="margin-bottom:10px;" class="form-control" />
+                <span asp-validation-for="Email" style="color: red;"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" style="margin-bottom:10px;" class="form-control" type="password" />
+                <span asp-validation-for="Password" style="color: red;"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword">Confirm Password</label>
+                <input asp-for="ConfirmPassword" style="margin-bottom:10px;" class="form-control" type="password" />
+                <span asp-validation-for="ConfirmPassword" style="color: red;"></span>
+            </div>
+
+            <div id="company-fields" class="hidden">
+                <div class="form-group">
+                    <label asp-for="Type">Type</label>
+                    <select asp-for="Type" class="form-control">
+                        <option value="">Select Type</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Company">Company</option>
+                        <option value="Mall">Mall</option>
+                        <option value="Supermarket">Supermarket</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address">Address</label>
+                    <input asp-for="Address" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactInfo">Contact Info</label>
+                    <input asp-for="ContactInfo" class="form-control" type="tel" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IsAdmin">Register As</label>
+                <div class="d-flex justify-content-between" style="display: flex; flex-direction: row; justify-content: center;">
+                    <!-- User button -->
+                    <button type="button" class="btn btn-primary" onclick="toggleCompanyFields(false)" style="margin-right: 30px;width:35%;">User</button>
+                    <!-- Company button -->
+                    <button type="button" class="btn btn-secondary" onclick="toggleCompanyFields(true)" style="width:35%;">Company</button>
+
+                    <!-- Div with checkboxes, initially hidden -->
+                    <div id="company-fields" style="display: none;">
+                        <input type="checkbox" />
+                        <input type="checkbox" />
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" class="btn" value="Submit" width="20%"/>
+            <div class="text-center mt-2">
+                <a asp-controller="Account" asp-action="Login" style="color:white;text-decoration:none;">Already have an account? Login</a>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <p>© Copyrights 2024 The E-Shop Prices Checker</p>
+    </footer>
+</body>
+</html>
