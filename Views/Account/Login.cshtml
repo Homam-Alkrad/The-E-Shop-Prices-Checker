@@ -1,0 +1,155 @@
+﻿@model The_E_Shop_Prices_Checker.Models.ViewModels.LoginViewModel
+@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2b1b18;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            background-color: #2b1b18;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            margin:100px auto 0px;
+        }
+
+        .text-center {
+            text-align: center;
+            color: #ff880e;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                color: #ff880e;
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .form-group input {
+                width: 96%;
+                padding: 10px;
+                background-color: #f87f04;
+                border: none;
+                border-radius: 5px;
+                color: white;
+                font-size: 14px;
+
+            }
+
+                .form-group input:focus {
+                    outline: none;
+                    box-shadow: 0px 0px 5px #ff880e;
+                }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-check {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+            .form-check input {
+                margin-right: 10px;
+                accent-color: #ff880e;
+            }
+
+            .form-check label {
+                color: #ff880e;
+            }
+
+        .btn {
+            width: 20%;
+            padding: 10px;
+            background-color: #ff880e;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn:hover {
+                background-color: #f87f04;
+            }
+
+        .circle {
+            background-color: #f87f04;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        footer {
+            background-color: #4d2900; /* Dark brown background */
+            color: white; /* Text color */
+            text-align: center; /* Center the text */
+            padding: 10px 0; /* Spacing inside the footer */
+            font-size: 14px; /* Font size for the text */
+            position: fixed; /* Make it stick to the bottom */
+            bottom: 0; /* Align to the bottom */
+            width: 100%; /* Full width */
+            z-index: 100; /* Keep it on top of other elements */
+            height:50px;
+            display:flex;
+            justify-content:center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" style="min-width: 35%;">
+        <h2 class="text-center">Login</h2>
+        <form asp-action="Login" method="post">
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" style="margin-bottom:10px;" class="form-control" />
+
+                <span asp-validation-for="Email" style="color: red;"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" style="margin-bottom:5px;" class="form-control" type="password" />
+                <span asp-validation-for="Password" style="color: red;"></span>
+            </div>
+            <div class="form-group" style="display:flex;justify-content:center;">
+                <button type="submit" class="btn">Login</button>
+            </div>
+            <div class="form-check" style="margin-top:10px;">
+                <div class="circle"></div>
+                <a asp-controller="Account" asp-action="Register" style="color:white;margin-left:10px;">Don't have an account?</a>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <p>© Copyrights 2024 design The E-Shop Prices Checker</p>
+    </footer>
+</body>
+</html>

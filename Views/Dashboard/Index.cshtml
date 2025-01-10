@@ -1,0 +1,560 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using The_E_Shop_Prices_Checker.Models
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = UserManager.GetUserAsync(User).Result;
+}
+@{
+    Layout = "";
+}
+@model IEnumerable<The_E_Shop_Prices_Checker.Models.Product>
+
+@{
+    ViewData["Title"] = "Product Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Corona Admin</title>
+	<!-- plugins:css -->
+    <link rel="stylesheet" href="~/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/assets/vendors/font-awesome/css/font-awesome.min.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/assets/vendors/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="~/assets/vendors/flag-icon-css/css/flag-icons.min.css">
+    <link rel="stylesheet" href="~/assets/vendors/owl-carousel-2/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+	<!-- Layout styles -->
+    <link rel="stylesheet" href="~/assets/vendors/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="~/assets/images/favicon.png" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-scroller">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+                <div class="sidebar-logo">
+                    <span class="logo-text">The E-Shop Prices</span>
+                </div>
+            </div>
+            <ul class="nav">
+                <li class="nav-item profile">
+                    <div class="profile-desc">
+                        <div class="profile-pic">
+                            <div class="count-indicator">
+                                <img class="img-xs rounded-circle " src="~/user_profile.jpg" alt="">
+                                <span class="count bg-success"></span>
+                            </div>
+                            <div class="profile-name">
+                                <h5 class="mb-0 font-weight-normal">@user.FullName</h5>
+                                <span>Gold Member</span>
+                            </div>
+                        </div>
+                        <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+                            <a href="#" class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-dark rounded-circle">
+                                        <i class="mdi mdi-cog text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-dark rounded-circle">
+                                        <i class="mdi mdi-onepassword  text-info"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-dark rounded-circle">
+                                        <i class="mdi mdi-calendar-today text-success"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item nav-category">
+                    <span class="nav-link">Navigation</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Dashboard/Index">
+                        <i class="fas fa-tachometer-alt" style="color: #0090e7; margin-right: 8px;"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Dashboard/CompProduct">
+                        <i class="fas fa-box" style="color: #fc424a; margin-right: 8px;"></i> Products
+                    </a>
+                </li>
+                <!-- Home Links -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Index">
+                        <i class="fas fa-home" style="color: #0090e7; margin-right: 8px;"></i> Home
+                    </a>
+                </li>
+
+                <!-- Account Links -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/Account/Logout">
+                        <i class="fas fa-sign-out-alt" style="color: #fc424a; margin-right: 8px;"></i> Logout
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/About">
+                        <i class="fas fa-info-circle" style="color: #0090e7; margin-right: 8px;"></i> About
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_navbar.html -->
+            <nav class="navbar p-0 fixed-top d-flex flex-row">
+                <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+                    <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../../assets/images/logo-mini.svg" alt="logo" /></a>
+                </div>
+                <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                        <span class="mdi mdi-menu"></span>
+                    </button>
+                    <ul class="navbar-nav w-100">
+                        <li class="nav-item w-100">
+                            <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                                <input type="text" class="form-control" placeholder="Search products">
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav navbar-nav-right">
+                        <li class="nav-item dropdown d-none d-lg-block">
+                            <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">    <i class="fas fa-tasks"></i> Product Management</a>
+                            <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
+                                <h6 class="p-3 mb-0">Projects</h6>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-file-outline text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject ellipsis mb-1">Software Development</p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-web text-info"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject ellipsis mb-1">UI Development</p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-layers text-danger"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject ellipsis mb-1">Software Testing</p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <p class="p-3 mb-0 text-center">See all projects</p>
+                            </div>
+                        </li>
+                        <li class="nav-item nav-settings d-none d-lg-block">
+                            <a class="nav-link" href="#">
+                                <i class="mdi mdi-view-grid"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown border-left">
+                            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="mdi mdi-email"></i>
+                                <span class="count bg-success"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                                <h6 class="p-3 mb-0">Messages</h6>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="../../../assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic">
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject ellipsis mb-1">Mark send you a message</p>
+                                        <p class="text-muted mb-0"> 1 Minutes ago </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="../../../assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
+                                        <p class="text-muted mb-0"> 15 Minutes ago </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <img src="../../../assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject ellipsis mb-1">Profile picture updated</p>
+                                        <p class="text-muted mb-0"> 18 Minutes ago </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <p class="p-3 mb-0 text-center">4 new messages</p>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown border-left">
+                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                                <i class="mdi mdi-bell"></i>
+                                <span class="count bg-danger"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                                <h6 class="p-3 mb-0">Notifications</h6>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-calendar text-success"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1">Event today</p>
+                                        <p class="text-muted ellipsis mb-0"> Just a reminder that you have an event today </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-cog text-danger"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1">Settings</p>
+                                        <p class="text-muted ellipsis mb-0"> Update dashboard </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-link-variant text-warning"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1">Launch Admin</p>
+                                        <p class="text-muted ellipsis mb-0"> New admin wow! </p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <p class="p-3 mb-0 text-center">See all notifications</p>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
+                                <div class="navbar-profile">
+                                    <img class="img-xs rounded-circle" src="~/user_profile.jpg" alt="">
+                                    <p class="mb-0 d-none d-sm-block navbar-profile-name">@user.FullName</p>
+                                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+                                <h6 class="p-3 mb-0">Profile</h6>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-cog text-success"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1">Settings</p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item preview-item">
+                                    <div class="preview-thumbnail">
+                                        <div class="preview-icon bg-dark rounded-circle">
+                                            <i class="mdi mdi-logout text-danger"></i>
+                                        </div>
+                                    </div>
+                                    <div class="preview-item-content">
+                                        <p class="preview-subject mb-1">Log out</p>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <p class="p-3 mb-0 text-center">Advanced settings</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                        <span class="mdi mdi-format-line-spacing"></span>
+                    </button>
+                </div>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <!-- Max Price Card -->
+                        <div class="col-sm-6 col-md-6 col-lg-6 grid-margin">
+                            <div class="card border-primary shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Max Price</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h2 class="fw-bold mb-0 text-dark" id="maxPrice">$0</h2>
+                                            <div id="maxPriceCompany" class="mt-2">
+                                                <p class="text-success fw-medium mb-0">N/A</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <i class="icon-lg mdi mdi-cash-multiple text-primary"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Min Price Card -->
+                        <div class="col-sm-6 col-md-6 col-lg-6 grid-margin">
+                            <div class="card border-danger shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger">Min Price</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h2 class="fw-bold mb-0 text-dark" id="minPrice">$0</h2>
+                                            <div id="minPriceCompany" class="mt-2">
+                                                <p class="text-danger fw-medium mb-0">N/A</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <i class="icon-lg mdi mdi-cash-100 text-danger"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Data Section -->
+                    <div class="row">
+                        <div class="col-12 grid-margin">
+                            <div class="card-body">
+                                <h4 class="card-title">Product Data</h4>
+                                <ul class="navbar-nav w-100">
+                                    <li class="nav-item w-100">
+                                        <div class="input-group">
+                                            <input type="text" id="productSearch" class="form-control" placeholder="Search products">
+                                            <button id="searchButton" class="btn btn-primary" type="button">Search</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="mb-3 mt-3">
+                                    <select id="productDropdown" class="form-select">
+                                        <option value="" disabled selected>Choose a product</option>
+                                        @foreach (var product in Model)
+                                        {
+                                            <option value="@product.Name">@product.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table" id="productTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Entity Name</th>
+                                                <th>Product Name</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Category</th>
+                                                <th>Availability</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Data will be dynamically populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024 <a href="https://www.bootstrapdash.com/" target="_blank">BootstrapDash</a>. All rights reserved.</span>
+                        <span class="text-muted float-none float-sm-end d-block mt-1 mt-sm-0 text-center"> <span class="text-muted float-none float-sm-end d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span> <i class="mdi mdi-heart text-danger"></i></span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <script>
+        $(document).ready(function () {
+            // Fetch system statistics and update the cards
+            function fetchSystemStats() {
+                $.ajax({
+                    url: '/Dashboard/GetSystemStats',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#entitiesCount').text(data.entitiesCount);
+                        $('#productsCount').text(data.productsCount);
+                        $('#categoriesCount').text(data.categoriesCount);
+                        $('#usersCount').text(data.usersCount);
+                    },
+                    error: function (error) {
+                        console.error('Error fetching system stats:', error);
+                    }
+                });
+            }
+
+            // Fetch all products with the same name and populate the table
+            function fetchProductData(productName) {
+                $.ajax({
+                    url: '/Dashboard/GetProductData',
+                    type: 'GET',
+                    data: { productName: productName },
+                    success: function (data) {
+                        const tableBody = $('#productTable tbody');
+                        tableBody.empty();
+
+                        if (data.length > 0) {
+                            data.forEach(item => {
+                                const row = `
+                                        <tr>
+                                            <td>${item.ownerName}</td>
+                                            <td>${item.productName}</td>
+                                            <td>${item.description}</td>
+                                            <td>${item.price}</td>
+                                            <td>${item.categoryName}</td>
+                                            <td>${item.isAvailable ? 'Yes' : 'No'}</td>
+                                        </tr>`;
+                                tableBody.append(row);
+                            });
+                        } else {
+                            const row = `
+                                    <tr>
+                                        <td colspan="6" class="text-center">No data available</td>
+                                    </tr>`;
+                            tableBody.append(row);
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error fetching product data:', error);
+                    }
+                });
+            }
+
+            // Fetch price range and update the cards
+            function fetchPriceRange(productName) {
+                $.ajax({
+                    url: '/Dashboard/GetProductPriceRange',
+                    type: 'GET',
+                    data: { productName: productName },
+                    success: function (priceData) {
+                        // Update max price and all company details
+                        $('#maxPrice').text(`$${priceData.maxPrice.toFixed(2)}`);
+                        $('#maxPriceCompany').html(`
+                                <strong>Owner:</strong> ${priceData.maxOwner.ownerName}<br>
+                                <strong>Type:</strong> ${priceData.maxOwner.ownerType}<br>
+                                <strong>Address:</strong> ${priceData.maxOwner.ownerAddress}<br>
+                                <strong>Contact:</strong> ${priceData.maxOwner.ownerContact}
+                            `);
+
+                        // Update min price and all company details
+                        $('#minPrice').text(`$${priceData.minPrice.toFixed(2)}`);
+                        $('#minPriceCompany').html(`
+                                <strong>Owner:</strong> ${priceData.minOwner.ownerName}<br>
+                                <strong>Type:</strong> ${priceData.minOwner.ownerType}<br>
+                                <strong>Address:</strong> ${priceData.minOwner.ownerAddress}<br>
+                                <strong>Contact:</strong> ${priceData.minOwner.ownerContact}
+                            `);
+                    },
+                    error: function (error) {
+                        console.error('Error fetching price range:', error);
+                    }
+                });
+            }
+
+            // Filter dropdown options based on search input
+            $('#productSearch').on('input', function () {
+                const searchValue = $(this).val().toLowerCase();
+                $('#productDropdown option').each(function () {
+                    const optionText = $(this).text().toLowerCase();
+                    $(this).toggle(optionText.includes(searchValue));
+                });
+            });
+
+            // Handle search button click
+            $('#searchButton').on('click', function () {
+                const productName = $('#productSearch').val().trim();
+                if (productName) {
+                    fetchProductData(productName);
+                    fetchPriceRange(productName);
+                } else {
+                    alert('Please enter a product name to search.');
+                }
+            });
+
+            // Handle product dropdown change
+            $('#productDropdown').on('change', function () {
+                const productName = $(this).val();
+                if (productName) {
+                    fetchProductData(productName);
+                    fetchPriceRange(productName);
+                }
+            });
+
+            // Fetch stats on page load
+            fetchSystemStats();
+        });
+    </script>
+
+
+</body>
+</html>
