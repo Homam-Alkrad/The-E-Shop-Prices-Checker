@@ -77,21 +77,30 @@ namespace The_E_Shop_Prices_Checker.Controllers
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                // Find the user by email
+                var user = await _userManager.FindByEmailAsync(model.Email);
 
-                if (result.Succeeded)
+                if (user != null)
                 {
-                    var user = await _userManager.FindByEmailAsync(model.Email);
-
-                    if (user != null)
+                    // Check if the user is blocked
+                    if (user.IsBlocked)
                     {
+                        ModelState.AddModelError(string.Empty, "Your account has been blocked. Please contact support.");
+                        return View(model);
+                    }
+
+                    // Attempt sign-in
+                    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+                    if (result.Succeeded)
+                    {
+                        // Redirect based on user role
                         if (!await _userManager.IsInRoleAsync(user, "Admin"))
                         {
                             return RedirectToAction("Index", "Dashboard");
@@ -127,7 +136,6 @@ namespace The_E_Shop_Prices_Checker.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
         public IActionResult ToggleBlock(string userId)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == userId);
@@ -135,7 +143,7 @@ namespace The_E_Shop_Prices_Checker.Controllers
             if (user == null)
             {
                 TempData["Error"] = "User not found.";
-                return RedirectToAction("Users");
+                return RedirectToAction("Users","Dashboard");
             }
 
             user.IsBlocked = !user.IsBlocked; // Toggle the IsBlocked status
@@ -144,7 +152,8 @@ namespace The_E_Shop_Prices_Checker.Controllers
 
             TempData["Success"] = user.IsBlocked ? "User blocked successfully." : "User unblocked successfully.";
 
-            return RedirectToAction("Users"); // Redirect back to the Users view
+
+            return RedirectToAction("Users", "Dashboard");
         }
 
     }

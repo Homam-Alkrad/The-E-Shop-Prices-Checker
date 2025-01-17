@@ -12,6 +12,7 @@ namespace The_E_Shop_Prices_Checker.Models
         {
             public DbSet<Category> Categories { get; set; }
             public DbSet<Product> Products { get; set; }
+            public DbSet<Contact> Contacts { get; set; }
 
             public E_ShopContext(DbContextOptions<E_ShopContext> options) : base(options)
             {

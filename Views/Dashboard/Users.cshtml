@@ -282,7 +282,6 @@
                                                     <th>Full Name</th>
                                                     <th>Email</th>
                                                     <th>Type</th>
-                                                    <th>Address</th>
                                                     <th>Contact Info</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
@@ -295,16 +294,13 @@
                                                         <td>@item.FullName</td>
                                                         <td>@item.Email</td>
                                                         <td>@item.Type</td>
-                                                        <td>@item.Address</td>
                                                         <td>@item.ContactInfo</td>
                                                         <td>@(item.IsBlocked ? "Blocked" : "Active")</td>
                                                         <td>
-                                                            <form method="post" asp-action="ToggleBlock" asp-controller="Account">
-                                                                <input type="hidden" name="userId" value="@user.Email" />
-                                                                <button type="submit" class="btn btn-sm @(user.IsBlocked ? "btn-success" : "btn-danger")">
-                                                                    @(user.IsBlocked ? "Unblock" : "Block")
-                                                                </button>
-                                                            </form>
+                                                            <a asp-action="ToggleBlock" asp-controller="Account" asp-route-userId="@item.Email"
+                                                               class="btn btn-sm @(item.IsBlocked ? "btn-success" : "btn-danger")">
+                                                                @(user.IsBlocked ? "Unblock" : "Block")
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 }
@@ -342,25 +338,6 @@
                 })
                 .catch(error => console.error('Error fetching statistics:', error));
         });
-    </script>
-    <script>
-        // Fetch and display admin users
-        function toggleBlock(userId) {
-            fetch('/Account/ToggleBlock', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                    // Reload or update the user list here
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        // Load users when the page loads
-        document.addEventListener('DOMContentLoaded', loadUsers);
     </script>
     <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
 
