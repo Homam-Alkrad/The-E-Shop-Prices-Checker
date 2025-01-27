@@ -39,12 +39,13 @@ namespace The_E_Shop_Prices_Checker.Controllers
                     FullName = model.FullName,
                     UserName = model.Email,
                     Email = model.Email,
-                    IsAdmin = model.IsAdmin,
                     IsBlocked = false, // Default value
                     Type = (Models.UserType?)model.Type,
                     Address = model.Address,
                     ContactInfo = model.ContactInfo
                 };
+                if (model.Type != null)
+                    model.IsAdmin = true;
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
