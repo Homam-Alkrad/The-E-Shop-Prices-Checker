@@ -117,13 +117,26 @@ namespace The_E_Shop_Prices_Checker.Controllers
 
         public IActionResult Products()
         {
-            // Return all products with detailed information
             var products = _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.ApplicationUser)
                 .ToList();
-            return View(products);
+
+            var maxPriceProduct = products.OrderByDescending(p => p.Price).FirstOrDefault();
+            var minPriceProduct = products.OrderBy(p => p.Price).FirstOrDefault();
+
+            var viewModel = new UserProductsViewModel
+            {
+                Products = products,
+                MaxPriceProduct = maxPriceProduct,
+                MinPriceProduct = minPriceProduct,
+                TotalProducts = products.Count,
+                Categories = _context.Categories.ToList() // Assuming Categories exist in your DbContext
+            };
+
+            return View(viewModel);
         }
+
 
         public IActionResult Users()
         {

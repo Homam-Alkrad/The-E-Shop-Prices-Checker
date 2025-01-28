@@ -94,5 +94,36 @@ namespace The_E_Shop_Prices_Checker.Controllers
             return Json(new { success = false, message = "Invalid data." });
         }
 
+
+        public IActionResult Delete(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+
+            return RedirectToAction("ProductManagements", "Dashboard");
+        }
+
+        public IActionResult DeleteAsAdmin(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+
+            return RedirectToAction("Products", "Dashboard");
+        }
+
     }
 }

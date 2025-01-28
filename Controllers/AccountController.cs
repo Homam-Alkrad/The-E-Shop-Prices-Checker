@@ -45,7 +45,7 @@ namespace The_E_Shop_Prices_Checker.Controllers
                     ContactInfo = model.ContactInfo
                 };
                 if (model.Type != null)
-                    model.IsAdmin = true;
+                    user.IsAdmin = true;
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -62,7 +62,11 @@ namespace The_E_Shop_Prices_Checker.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    return RedirectToAction("Index", "Home");
+                    if(model.IsAdmin == true)
+                    {
+                     return RedirectToAction("ProductManagements", "Dashboard");
+                    }
+                    return RedirectToAction("Index", "Dashboard");
                 }
 
                 foreach (var error in result.Errors)
@@ -101,6 +105,9 @@ namespace The_E_Shop_Prices_Checker.Controllers
 
                     if (result.Succeeded)
                     {
+                        if(model.Email== "superadmin@example.com")
+                            return RedirectToAction("Users", "Dashboard");
+
                         // Redirect based on user role
                         if (!await _userManager.IsInRoleAsync(user, "Admin"))
                         {

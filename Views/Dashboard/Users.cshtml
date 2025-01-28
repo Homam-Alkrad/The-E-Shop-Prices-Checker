@@ -118,34 +118,53 @@
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Dashboard/Index">
+                    <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
                         <i class="fas fa-tachometer-alt" style="color: #0090e7; margin-right: 8px;"></i> Dashboard
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Dashboard/CompProduct">
-                        <i class="fas fa-box" style="color: #fc424a; margin-right: 8px;"></i> Products
-                    </a>
-                </li>
+
+                @if (user?.Email == "superadmin@example.com")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Dashboard" asp-action="Products">
+                            <i class="fas fa-box" style="color: #fc424a; margin-right: 8px;"></i> Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Dashboard" asp-action="Users">
+                            <i class="fas fa-user" style="color: #0090e7; margin-right: 8px;"></i> Users
+                        </a>
+                    </li>
+                }
+
+                @if (user?.IsAdmin == true)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Dashboard" asp-action="ProductManagements">
+                            <i class="fas fa-cogs" style="color: #00c853; margin-right: 8px;"></i> Product Management
+                        </a>
+                    </li>
+                }
 
                 <!-- Home Links -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/Home/Index">
-                        <i class="fas fa-home" style="color: #0090e7; margin-right: 8px;"></i> Home
+                    <a class="nav-link" asp-action="Index" asp-controller="Home">
+                        <i class="fas fa-home" style="color: #fc424a; margin-right: 8px;"></i> Home
                     </a>
                 </li>
 
                 <!-- Account Links -->
                 <li class="nav-item">
                     <a class="nav-link" href="/Account/Logout">
-                        <i class="fas fa-sign-out-alt" style="color: #fc424a; margin-right: 8px;"></i> Logout
+                        <i class="fas fa-sign-out-alt" style="color: #0090e7; margin-right: 8px;"></i> Logout
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Home/About">
-                        <i class="fas fa-info-circle" style="color: #0090e7; margin-right: 8px;"></i> About
+                        <i class="fas fa-info-circle" style="color: #fc424a; margin-right: 8px;"></i> About
                     </a>
                 </li>
+
             </ul>
         </nav>
         <!-- partial -->
@@ -167,9 +186,6 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav navbar-nav-right">
-                        <li class="nav-item d-none d-lg-block">
-                            <a class="nav-link btn btn-success create-new-button" id="createNewProductButton" href="#" style="background-color: #0090e7; border: none;">+ Create New Product</a>
-                        </li>
                         <li class="nav-item nav-settings d-none d-lg-block">
                             <a class="nav-link" href="#">
                                 <i class="mdi mdi-view-grid"></i>
